@@ -7,10 +7,10 @@ class RecipeApp extends Component {
     return (
       <div className="App">
         <Recipe
-          title="pasta"
-          ingredients={['flour', 'water']}
-          instructions="Mix ingredients"
-          img="spaghetti.jpg"
+          title={"pasta", "Avocado Toast"}
+          ingredients={['flour', 'water'], ['toast', 'avocado']}
+          instructions={"Mix ingredients", "Toast bread, mash avocado, and spread mash over toast"}
+          img={"spaghetti.jpg", "spaghetti.jpg"}
           />
       </div>
     );
