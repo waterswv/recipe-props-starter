@@ -32,7 +32,9 @@ class RecipeApp extends Component {
     return (
       <div className="App">
         <Nav />
-        {recipes}
+        <div className="Recipe-App">
+          {recipes}
+        </div>
       </div>
     );
   }
