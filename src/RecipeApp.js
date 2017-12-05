@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Recipe from './Recipe';
+import RecipeList from './RecipeList';
 import PropTypes from 'prop-types';
 import './RecipeApp.css';
 import Nav from './Nav';
@@ -8,7 +8,7 @@ class RecipeApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipe: [
+      recipes: [
         {
           id: 0,
           title: "Spaghetti",
@@ -30,18 +30,17 @@ class RecipeApp extends Component {
           ingredients: ["2 slices of bread", "1 avocado", "1 tablespoon olive oil", "1 pinch of salt", "pepper"],
           img: "avocado_toast.jpg"
         }
-      ]
+      ],
+      nextRecipeId: 3,
     }
   }
   render() {
-    const recipes = this.props.recipes.map((r, index) => (
-        <Recipe key={index} {...r}/>
-      ));
+
     return (
       <div className="App">
         <Nav />
         <div className="Recipe-App">
-          {recipes}
+          <RecipeList recipes={this.state.recipes} />
         </div>
       </div>
     );
