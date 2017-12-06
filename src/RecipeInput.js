@@ -1,8 +1,11 @@
-import React, (Component) form 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './RecipeInput.css'
 
 class RecipeInput extends Component {
   static defaultProps = {
-    onClose() {}
+    onClose() {},
+    onSave() {}
   }
 
   constructor(props) {
@@ -10,10 +13,13 @@ class RecipeInput extends Component {
     this.state = {
       title: '',
       instructions: '',
-      ingredients: '',
+      ingredients: [''],
       img: ''
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleNewIngredient = this.handleNewIngredient.bind(this);
+    this.handleChangeIng = this.handleChangeIng.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -21,15 +27,36 @@ class RecipeInput extends Component {
     this.setState({[e.target.value]: e.target.value});
   }
 
+  handleNewIngredient(e) {
+    const {ingredients} = this.state;
+    this.setState({ingredients: [...ingredients, '']});
+  }
+
+  handleChangeIng(e) {
+    const index = Number(e.target.name.split('-')[1]);
+    const ingredients = this.state.ingredients.map((ing, i) => (
+      i === index ? e.target.value : ing
+    ));
+    this.setState({ingredients});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSave({...this.state});
+    this.setState({
+      title: '',
+      instructions: '',
+      ingredients: [''],
+      img: ''
+    })
+  }
+
   render() {
-    const {title, instructions, img, ingredients} = this.state;
+    const {title, instructions, ingredients, img} = this.state;
     const {onClose} = this.props;
     let inputs = ingredients.map((ing, i) => (
-      <div
-      className="recipe-form-line"
-      key={`ingredient-${i}`}
-      >
-        <label>
+      <div className="recipe-form-line" key={`ingredient-${i}`}>
+        <label>{i+1}.
           <input
           type='text'
           name={`ingredient-${i}`}
@@ -43,6 +70,7 @@ class RecipeInput extends Component {
       </div>
 
     ));
+
     return (
         <div className="recipe-form-container">
           <form className='recipe-form' onSubmit={this.handleSubmit}>
@@ -92,6 +120,7 @@ class RecipeInput extends Component {
             <div className='recipe-form-line'>
               <label htmlFor='recipe-img-input'>Image Url</label>
               <input
+                key='img'
                 id='recipe-img-input'
                 type='text'
                 placeholder=''
